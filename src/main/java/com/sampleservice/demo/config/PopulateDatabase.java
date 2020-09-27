@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 import com.sampleservice.demo.dao.StudentDAO;
 import com.sampleservice.demo.model.Student;
+import com.sampleservice.demo.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PopulateDatabase implements ApplicationRunner {
 	Logger logger = LoggerFactory.getLogger(PopulateDatabase.class);
-	
+
+	private StudentService studentService;
+
 	@Autowired
-	private StudentDAO studentRepo;
+	public PopulateDatabase(StudentService studentService) {
+		this.studentService = studentService;
+	}
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -45,8 +50,8 @@ public class PopulateDatabase implements ApplicationRunner {
 			
 			students.add(student);
 		});
-		
-		studentRepo.saveAll(students);
+
+		studentService.saveAll(students);
 		
 		logger.debug("Database filled up!");
 	}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -67,5 +68,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student saveOrUpdate(Student student) {
         return studentDAO.save(student);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Collection<Student> saveAll(List<Student> students) {
+        return StreamSupport.stream(studentDAO.saveAll(students).spliterator(), false)
+                .collect(Collectors.toSet());
     }
 }

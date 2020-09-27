@@ -19,13 +19,15 @@ import com.sampleservice.demo.dto.inbound.StudentInDTO;
 import com.sampleservice.demo.dto.outbound.StudentOutDTO;
 import com.sampleservice.demo.model.Student;
 
-@RestController("/students")
+@RestController
+@RequestMapping("/students")
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
-	
-	@GetMapping("/list")
-	@ResponseBody
+
+	public StudentController() {}
+
+	@GetMapping("list")
 	public List<StudentOutDTO> list() {
 		Collection<Student> studentsIterable = studentService.list();
 		List<StudentOutDTO> outDTOs = new ArrayList<>(); 
@@ -33,22 +35,20 @@ public class StudentController {
 		return outDTOs; 
 	}
 	
-	@GetMapping("/{sid}")
-	@ResponseBody
+	@GetMapping("{sid}")
 	public StudentOutDTO getById(@PathVariable("sid") Long id) {
 		Student student = studentService.findById(id);
 		return new StudentOutDTO(student);
 	}
 	
 	@PostMapping
-	@ResponseBody
 	public StudentOutDTO save(@RequestBody StudentInDTO dto) {
 		Student student = dto.toEntity(); 
 		studentService.saveOrUpdate(student);
 		return new StudentOutDTO(student); 
 	}
 	
-	@DeleteMapping("/{sid}")
+	@DeleteMapping("{sid}")
 	public ResponseEntity<?> delete(@PathVariable("sid") Long id) {
 		Student existingStudent = studentService.findById(id);
 		studentService.delete(existingStudent);
