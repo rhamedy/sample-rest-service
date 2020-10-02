@@ -1,6 +1,6 @@
 
-# Student Rest Service for Testing Bluediff Cover Plugin
-This basic rest service app is used to test the Bluediff Cover plugin.
+# Student Rest Service for Testing Diffblue Cover Plugin
+This basic rest service app is used to test the Diffblue Cover plugin.
 
 This is a `Spring Boot 2.1.6` tiny app that includes `webapp, actuator, spring-data-jpa` starts and exposes four (4) endpoints as listed below 
 
